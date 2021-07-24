@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Belot Calculator</string>
+    <string-array name="suits">
+        <item>Clubs</item>
+        <item>Hearts</item>
+        <item>Spades</item>
+        <item>Diamonds</item>
+        <item>None/All</item>
+    </string-array>
+</resources>

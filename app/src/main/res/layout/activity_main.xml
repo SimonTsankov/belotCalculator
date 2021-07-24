@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:screenOrientation="portrait"
+    android:background="#4CAF50"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Боя коз: "
+        app:layout_constraintEnd_toStartOf="@+id/radioGroup"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="149dp"
+        android:layout_height="95dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Spinner
+            android:id="@+id/spinnerSuit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/radio_trump"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:onClick="setTrumpGame"
+            android:text="Всичко коз"></RadioButton>
+
+        <RadioButton
+            android:id="@+id/radio_NoTrump"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="setNonTrumpGame"
+            android:text="Нищо коз"
+            android:visibility="visible"></RadioButton>
+
+        <RadioButton
+            android:id="@+id/radio_none"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="setNonTrumpGame"
+            android:text="Нищо коз"
+            android:visibility="invisible"></RadioButton>
+    </RadioGroup>
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:layout_marginTop="130dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginBottom="300dp"
+        android:foregroundGravity="center_vertical|clip_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="153dp"
+            android:dividerPadding="2000dp">
+
+            <ImageView
+                android:id="@+id/ace_card_img"
+                android:layout_width="120dp"
+                android:layout_height="140dp"
+                android:onClick="ace_clicked"
+                app:srcCompat="@drawable/as" />
+
+            <ImageView
+                android:id="@+id/king_card_img"
+                android:layout_width="120dp"
+                android:layout_height="140dp"
+                android:onClick="king_clicked"
+                app:srcCompat="@drawable/ks" />
+
+            <ImageView
+                android:id="@+id/queen_card_img"
+                android:layout_width="120dp"
+                android:layout_height="140dp"
+                android:onClick="queen_clicked"
+                app:srcCompat="@drawable/qs" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+
+            <TextView
+                android:id="@+id/textViewEmpty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/jack_card_img"
+                android:layout_width="95dp"
+                android:layout_height="140dp"
+                android:onClick="jack_clicked"
+                app:srcCompat="@drawable/js" />
+
+            <ImageView
+                android:id="@+id/ten_card_img"
+                android:layout_width="120dp"
+                android:layout_height="140dp"
+                android:onClick="ten_clicked"
+                app:srcCompat="@drawable/_10s" />
+
+            <ImageView
+                android:id="@+id/nine_card_img"
+                android:layout_width="120dp"
+                android:layout_height="140dp"
+                android:onClick="nine_clicked"
+                app:srcCompat="@drawable/_9s" />
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="16dp"
+        android:background="#57E3A2"
+        android:text="Score: 0"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/clear_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:onClick="clear"
+        android:text="Clear"
+        app:backgroundTint="#009688"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <ImageView
+        android:id="@+id/tableImg"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:layout_marginTop="20dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/tablepng" />
+
+    <ImageView
+        android:id="@+id/c24"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="176dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c22"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="176dp"
+        android:layout_marginEnd="104dp"
+        android:layout_marginRight="104dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c13"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="152dp"
+        android:layout_marginRight="152dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c18"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="176dp"
+        android:layout_marginEnd="284dp"
+        android:layout_marginRight="284dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c17"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="176dp"
+        android:layout_marginEnd="324dp"
+        android:layout_marginRight="324dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c9"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="324dp"
+        android:layout_marginRight="324dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c2"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="284dp"
+        android:layout_marginRight="284dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c10"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="284dp"
+        android:layout_marginRight="284dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c3"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="240dp"
+        android:layout_marginRight="240dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c11"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="240dp"
+        android:layout_marginRight="240dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c19"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="176dp"
+        android:layout_marginEnd="240dp"
+        android:layout_marginRight="240dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c4"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="196dp"
+        android:layout_marginRight="196dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c12"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="196dp"
+        android:layout_marginRight="196dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c20"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="176dp"
+        android:layout_marginEnd="196dp"
+        android:layout_marginRight="196dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c5"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="152dp"
+        android:layout_marginRight="152dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c21"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="176dp"
+        android:layout_marginEnd="152dp"
+        android:layout_marginRight="152dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c6"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="104dp"
+        android:layout_marginRight="104dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c14"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="104dp"
+        android:layout_marginRight="104dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c7"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c15"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c23"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="176dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c8"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c16"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@android:drawable/menuitem_background" />
+
+    <ImageView
+        android:id="@+id/c1"
+        android:layout_width="55dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="328dp"
+        android:layout_marginRight="328dp"
+        app:layout_constraintEnd_toEndOf="@+id/tableImg"
+        app:layout_constraintTop_toTopOf="@+id/tableImg"
+        app:srcCompat="@drawable/empty" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
