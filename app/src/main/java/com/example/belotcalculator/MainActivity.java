@@ -1,9 +1,6 @@
 package com.example.belotcalculator;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.DialogInterface;
+import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,42 +13,40 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.HashMap;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     int score = 0, countCard = 0;
     boolean allTrumpGame = true, canceled = false, suitTrumpgame = true;
-
-
-    TextView suitText;
-    TextView scoreText;
+    String trumpSuit, suitCurrentCard = "Clubs";
+    TextView suitText,scoreText;
     Spinner spinner;
-
-    String suit, suitCurrentCard = "Clubs";
-
     String[] suitsArrays = {"Clubs", "Hearts", "Spades", "Diamonds"};
     List<ImageView> imgList = new LinkedList<>();
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        scoreText = findViewById(R.id.textView);
-        suitText = findViewById(R.id.textView3);
-
-        initSpinner();
+        initComponents();//Inits radioButtons, TextViews and the spinner
         populateImgList();
-        RadioButton radioAllTrump = findViewById(R.id.radio_trump);
-        radioAllTrump.toggle();
-
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//screw landscape mode
-        getSupportActionBar().hide();//screw the action bar
+        Objects.requireNonNull(getSupportActionBar()).hide();//screw the action bar
     }
 
+    void initComponents() {
+        scoreText = findViewById(R.id.textView);
+        suitText = findViewById(R.id.textView3);
+        RadioButton radioAllTrump = findViewById(R.id.radio_trump);
+        radioAllTrump.toggle();
+        initSpinner();
+    }
 
     void initSpinner() {
         spinner = findViewById(R.id.spinnerSuit);
@@ -62,11 +57,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
+    @SuppressLint("SetTextI18n")
     public void increaseScore(int incrementValue) {
         score += incrementValue;
         scoreText.setText("Score: " + score);
     }
 
+    @SuppressLint("SetTextI18n")
     private void resetScore() {
         score = 0;
         scoreText.setText("Score: 0");
@@ -78,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     void placeCardOnTable(int img) {
-
         imgList.get(countCard).setImageResource(img);
         if (countCard < 23)
             countCard++;
@@ -101,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         else {
             if (allTrumpGame) increaseScore(20);
             else increaseScore(2);
+            placeCardOnTable(R.drawable.jc);
         }
     }
 
@@ -114,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             showOptionsDialog("Nine");
         else {
             if (allTrumpGame) increaseScore(14);
+            placeCardOnTable(R.drawable._9c);
         }
     }
 
@@ -130,42 +128,39 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         countCard = 0;
     }
 
+    void initBuilder(AlertDialog.Builder builder) {
+        builder.setTitle("Which suit?");
+        builder.setSingleChoiceItems(suitsArrays, 0, (dialogInterface, i) -> suitCurrentCard = suitsArrays[i]);
+    }
+
+    void setBuilderPositiveButton(AlertDialog.Builder builder, String card) {
+        builder.setPositiveButton("Select", (dialogInterface, i) -> {
+            canceled = false;
+            if ((trumpSuit.equals(suitCurrentCard)))
+                increaseScore(card.equals("Nine") ? 14 : 20); //we only call this when the card is either jack or nine
+            else increaseScore(card.equals("Nine") ? 0 : 2);
+
+            if (card.equals("Nine"))
+                placeCardOnTable(R.drawable._9c);
+            else
+                placeCardOnTable(R.drawable.jc);
+
+            dialogInterface.dismiss();
+        });
+    }
+
+    void setBuilderNegativeButton(AlertDialog.Builder builder) {
+        builder.setNegativeButton("Cancel", (dialogInterface, i) -> {
+            canceled = true;
+            dialogInterface.dismiss();
+        });
+    }
 
     private void showOptionsDialog(String card) {
-        suitCurrentCard = "Clubs";
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Which suit?");
-        builder.setSingleChoiceItems(suitsArrays, 0, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                suitCurrentCard = suitsArrays[i];
-            }
-        });
-
-        builder.setPositiveButton("Select", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                canceled = false;
-                if ((suit.equals(suitCurrentCard)))
-                    increaseScore(card.equals("Nine") ? 14 : 20); //we only call this when the card is either jack or nine
-                else increaseScore(card.equals("Nine") ? 0 : 2);
-
-                if (card.equals("Nine"))
-                    placeCardOnTable(R.drawable._9c);
-                else
-                    placeCardOnTable(R.drawable.jc);
-
-                dialogInterface.dismiss();
-            }
-        });
-
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                canceled = true;
-                dialogInterface.dismiss();
-            }
-        });
+        initBuilder(builder);
+        setBuilderPositiveButton(builder, card);
+        setBuilderNegativeButton(builder);
 
         builder.show();
     }
@@ -195,16 +190,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             suitTrumpgame = true;
             spinner.setBackgroundColor(Color.CYAN);
 
-            suit = parent.getItemAtPosition(position).toString();
-
-            RadioButton radioNone = findViewById(R.id.radio_none);//selects an invisible radio button to deselect other radio buttons
-            radioNone.toggle();
+            trumpSuit = parent.getItemAtPosition(position).toString();
+            deselectRadioButtons();
         }
+    }
+
+    void deselectRadioButtons() {
+        RadioButton radioNone = findViewById(R.id.radio_none);//selects an invisible radio button to deselect other radio buttons
+        radioNone.toggle();
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-        Toast.makeText(adapterView.getContext(), "doestn work? ", Toast.LENGTH_LONG);
+        Toast.makeText(adapterView.getContext(), "doestn work? ", Toast.LENGTH_LONG).show();
     }
 
     private void populateImgList() { //i hate this monstrosity :ccc

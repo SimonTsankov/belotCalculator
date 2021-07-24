@@ -4,18 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:screenOrientation="portrait"
     android:background="#4CAF50"
-    tools:context=".MainActivity"
-    android:icon="@drawable/icon">
-
+    android:icon="@drawable/icon"
+    android:screenOrientation="portrait"
+    tools:context=".MainActivity">
 
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
         android:text="Боя коз: "
         app:layout_constraintEnd_toStartOf="@+id/radioGroup"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +44,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:onClick="setTrumpGame"
-            android:text="Всичко коз"></RadioButton>
+            android:text="Всичко коз" />
 
         <RadioButton
             android:id="@+id/radio_NoTrump"
@@ -51,7 +52,7 @@
             android:layout_height="match_parent"
             android:onClick="setNonTrumpGame"
             android:text="Нищо коз"
-            android:visibility="visible"></RadioButton>
+            android:visibility="visible" />
 
         <RadioButton
             android:id="@+id/radio_none"
@@ -59,7 +60,7 @@
             android:layout_height="match_parent"
             android:onClick="setNonTrumpGame"
             android:text="Нищо коз"
-            android:visibility="invisible"></RadioButton>
+            android:visibility="invisible" />
     </RadioGroup>
 
     <TableLayout
