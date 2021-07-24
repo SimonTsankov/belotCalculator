@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:screenOrientation="portrait"
     android:background="#4CAF50"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:icon="@drawable/icon">
+
 
 
     <TextView
